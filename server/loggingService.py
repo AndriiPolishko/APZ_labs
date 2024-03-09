@@ -16,10 +16,14 @@ def msg_saver(request : MessageRequest):
     global_dict[request.msg_uuid] = request.text
     print(f"Message {request.text} saved with id {request.msg_uuid}")
 
+    return {"status": "ok"}
+
 @app.get("/get-msg")
-def msg_get(msg_id: str):
-    if msg_id in global_dict:
-        return {"message": global_dict[msg_id]}
+def msg_get():
+    print(global_dict.values())
+    values = list(global_dict.values())
+    if values:
+        return {"message": " ".join(values)}
     else:
-        return {"message": "Not found"}
-uvicorn.run(app, port=8001)
+        return {"message": "Dictionary is empty"}
+uvicorn.run(app, port=8002)

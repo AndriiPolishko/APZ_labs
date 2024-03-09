@@ -4,9 +4,9 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/")
+@app.get("/dummy")
 def root_get():
-    return {"Hello": "World"}
+    return {"greating": "Hello World!"}
    
 
-uvicorn.run(app, host="127.0.0.1", port=8004)
+uvicorn.run(app, host="127.0.0.1", port=8003)
