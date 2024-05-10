@@ -1,0 +1,6 @@
+uvicorn
+fastapi
+httpx
+pydantic
+hazelcast-python-client
+kafka-python

@@ -1,0 +1,13 @@
+{"service": 
+  {
+    "ID": "logging-8002",
+    "Name": "logging2",
+    "Address": "127.0.0.1",
+    "Port": 8002,
+    "Check": {
+      "DeregisterCriticalServiceAfter": "90m",
+      "HTTP": "http://127.0.0.1:8002/health",
+      "Interval": "10s"
+    }
+  }
+}

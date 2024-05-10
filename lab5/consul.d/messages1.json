@@ -1,0 +1,13 @@
+{"service": 
+  {
+    "ID": "messages-8004",
+    "Name": "messages1",
+    "Address": "127.0.0.1",
+    "Port": 8004,
+    "Check": {
+      "DeregisterCriticalServiceAfter": "90m",
+      "HTTP": "http://127.0.0.1:8004/health",
+      "Interval": "10s"
+    }
+  }
+}
