@@ -1,12 +1,20 @@
-# Lab#1
+# Lab#4
+
+## Description
+First we create Kafka topic with two partitions for each of our message service:
+
+`bin/kafka-topics.sh --create --topic apz-messages --bootstrap-server localhost:9092 --replication-factor 1 --partitions 2`
 
 ## How to run
-To test this laboratory work you just need to run services in separate terminals
-1. python3 ./server/facadeService.py
-1. python3 ./server/loggingService.py
-1. python3 ./server/messagesService.py
-Then you need to choose client application. I've choosed Postman since it has really nice interface and it's very easy to use.
+To run facade service:
+-  `python3 -m uvicorn facade.api.facade_controller:app --port 8000 --reload`
 
-## Example of usage
+To run logging service:
+- `python3 -m uvicorn mylogging.api.logging_controller:app --port 8001 --reload`
+For logging service I am using ports from 8001 to 8003
 
-<video controls src="demo.mp4" title="Title"></video>
+To run message service:
+- `python3 -m uvicorn messages.api.messages_controller:app --port 8004 --reload`
+For message service I am using ports from 8004, 8005
+
+As a client I've used Post

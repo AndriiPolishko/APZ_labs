@@ -1,13 +1,17 @@
-import uvicorn
 import httpx
 from typing import Union
 from fastapi import FastAPI
 import random
+from kafka import KafkaProducer
+import json
+
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
+partitions = [0, 1]
 
 async def sendMessageToLoggingService(msg_uuid, text):
     async with httpx.AsyncClient() as client:
         try:
-            port = random.randint(8082, 8084)
+            port = random.randint(8001, 8003)
 
             print(f'Making a request to the logging service on port {port}')
 
@@ -17,8 +21,14 @@ async def sendMessageToLoggingService(msg_uuid, text):
                 "text": text})
 
             print(f'Seccess on request to the logging service. Response: {response.json()}')
+            
+            jsoned_data = json.dumps({'msg_uuid': msg_uuid, 'text': text}).encode('utf-8')
+            
+            for partition in partitions:
+                producer.send('apz-messages', jsoned_data, partition=partition)
 
             return {"status": response.json().get("status")}
+
         except Exception as error:
             print(f"Error occured while sending request to logging service: {error}")
 
@@ -27,7 +37,7 @@ async def sendMessageToLoggingService(msg_uuid, text):
 async def getItemsFromLoggerService():
     async with httpx.AsyncClient() as client:
         try:
-            port = random.randint(8082, 8084)
+            port = random.randint(8001, 8003)
 
             print(f'Making a request to the logging service on port {port}')
 
@@ -35,7 +45,7 @@ async def getItemsFromLoggerService():
             
             print(f'Seccess on request to the logging service. Response: {loggingServiceResponse.json()}')
 
-            messagesServiceResponse = await client.get(f"http://localhost:8085")
+            messagesServiceResponse = await client.get(f"http://localhost:8004")
 
             result = loggingServiceResponse.json().get("message") + " " + messagesServiceResponse.json().get("message")
 
