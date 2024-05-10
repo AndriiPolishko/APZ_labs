@@ -1,4 +1,4 @@
-# Lab#1
+# Lab#3
 
 ## How to run
 To test this laboratory work you just need to run services in separate terminals
