@@ -4,3 +4,4 @@ httpx
 pydantic
 hazelcast-python-client
 kafka-python
+python-consul

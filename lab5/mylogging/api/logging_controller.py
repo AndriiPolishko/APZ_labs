@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-
 from mylogging.services.logging_service import *
 
 class MessageRequest(BaseModel):
@@ -8,6 +7,12 @@ class MessageRequest(BaseModel):
     text: str
 
 app = FastAPI()
+logging_service_ports = [8001, 8002, 8003]
+service_port = logging_service_ports[0]
+
+@app.on_event("startup")
+def startup_event():
+    register_service_with_consul()
 
 @app.get("/")
 def read_root():

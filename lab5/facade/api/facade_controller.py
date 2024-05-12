@@ -9,6 +9,10 @@ class PrivitiveRequest(BaseModel):
 
 app = FastAPI()
 
+@app.on_event("startup")
+async def startup_event():
+    register_service_with_consul()
+
 @app.get("/")
 def root_get():
     return {"message": "Hello World from facade!"}
@@ -27,5 +31,3 @@ async def get_messages():
     result = await getItemsFromLoggerService()
 
     return result
-
-# uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
