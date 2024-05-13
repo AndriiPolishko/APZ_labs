@@ -1,4 +1,4 @@
-# Lab#4
+# Lab#5
 
 ## Description
 First we create Kafka topic with two partitions for each of our message service:
