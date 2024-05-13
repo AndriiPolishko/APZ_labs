@@ -10,7 +10,6 @@ hazecast_map = hazelcast_client.get_map("messages").blocking()
 global_dict = {}
 
 def saveMessage(msg_uuid, text):
-    #global_dict[msg_uuid] = text
     hazecast_map.set(msg_uuid, text)
 
     print(f"Message {text} saved with id {msg_uuid}")
@@ -24,5 +23,3 @@ def getMessagess():
     else:
         return ""
 
-
-# uvicorn.run(app, port=8002)
